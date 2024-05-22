@@ -1,5 +1,5 @@
-set(OPENTXS_REPO "ssh://git@github.com/matterfi/opentxs")
-set(OPENTXS_COMMIT "5efa5da00f2ecde80c39d971d3eb782003ae70e5")
+set(OPENTXS_REPO "ssh://git@github.com/radexx99/opentxs")
+set(OPENTXS_COMMIT "a86dc951d00d5e86a784ff30e932d0cac2d6a026")
 set(SOURCE_PATH "${DOWNLOADS}/opentxs.git")
 set(OT_VERSION_STRING "1.192.1-0-g5efa5da00f")
 
