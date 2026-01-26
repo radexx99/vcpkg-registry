@@ -4,9 +4,9 @@ vcpkg_from_git(
   OUT_SOURCE_PATH
   SOURCE_PATH
   URL
-  ssh://git@github.com/puszupek/matterfirpc
+  ssh://git@github.com/radexx99/matterfirpc
   REF
-  c1ecd3054cfc3283d63348a1f4af49d952e89bf6
+  4dd473029ed05c8de8a21942bcfb0c6cb3ae80f3
   HEAD_REF
   Solana_support)
 
