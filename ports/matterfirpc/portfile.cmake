@@ -4,11 +4,11 @@ vcpkg_from_git(
   OUT_SOURCE_PATH
   SOURCE_PATH
   URL
-  ssh://git@github.com/radexx99/matterfirpc
+  ssh://git@github.com/matterfi/matterfirpc
   REF
-  4dd473029ed05c8de8a21942bcfb0c6cb3ae80f3
+  3bce294477b2711c996631b9921bd75e0a2ce270
   HEAD_REF
-  Solana_support)
+  master)
 
 vcpkg_check_features(
   OUT_FEATURE_OPTIONS FEATURE_OPTIONS
