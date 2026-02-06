@@ -4,9 +4,9 @@ vcpkg_from_git(
         OUT_SOURCE_PATH
         SOURCE_PATH
         URL
-        ssh://git@github.com/matterfi/matterfirpc.git
+        ssh://git@github.com/radexx99/matterfirpc.git
         REF
-        4d8a40ac0241312fffe815b7677da199d076d18f
+        a3a9d240502f3ef7dedf78f9389ee1041a49b118
         HEAD_REF
         master)
 
