@@ -6,7 +6,7 @@ vcpkg_from_git(
   URL
   ssh://git@github.com/radexx99/matterfirpc.git
   REF
-  d6394e1e2d733dd5e783ec21c855fbea90e8dd4c
+  780da1210ca4a93711b256b3eafc7a6953e80fae
   HEAD_REF
   nodeDeploy)
 
