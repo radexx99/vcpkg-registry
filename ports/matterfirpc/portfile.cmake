@@ -21,7 +21,7 @@ if ("privacy-cash" IN_LIST FEATURES)
     message(STATUS "Privacy Cash feature enabled! Downloading Node.js...")
 
     # =====================================================================
-    # 1. KONFIGURACJA WERSJI I SYSTEMU
+    # 1. CONFIGURING NODE.js
     # =====================================================================
     set(NODE_VERSION "v20.19.0")
 
@@ -33,7 +33,7 @@ if ("privacy-cash" IN_LIST FEATURES)
         else ()
             set(NODE_ARCH "x64")
         endif ()
-        set(NODE_SHA512 "0") # <-- Tu jutro wkleisz hash dla Windowsa
+        set(NODE_SHA512 "7cb2f6b2f4cbcb2cef3d2f3089f65c1a570bc274d8a5c98fbbe53e352eb8acdf88ca4d4de7bcbb8abcd9599bc6fefa4e950ba46851cf7e87215c6b4f4a627a7c")
 
     elseif (VCPKG_TARGET_IS_LINUX)
         set(NODE_OS "linux")
@@ -43,17 +43,17 @@ if ("privacy-cash" IN_LIST FEATURES)
         else ()
             set(NODE_ARCH "x64")
         endif ()
-        set(NODE_SHA512 "0") # <-- Tu jutro wkleisz hash dla Linuksa
+        set(NODE_SHA512 "125d3e73d3e07fe2b7467f33cb69b21f8a551d018ef2b2d74bf2395c2ac986eae31b58beff56f68965b0d241b39f426499fd78ca9e15f043d2d6bc46b7175f7a")
 
     elseif (VCPKG_TARGET_IS_OSX)
         set(NODE_OS "darwin")
-        set(NODE_EXT "tar.gz") # macOS używa tar.gz!
+        set(NODE_EXT "tar.gz")
         if (VCPKG_TARGET_ARCHITECTURE STREQUAL "arm64")
             set(NODE_ARCH "arm64")
-            set(NODE_SHA512 "0") # <-- Tu jutro wkleisz hash dla Maca (M1/M2/M3)
+            set(NODE_SHA512 "cecadbc9488ae1dad39183248b0122aa23d63ea044eb4f795f5689c375f5dd17628cdd6db7bc100c9e07a4f20c78a33c16741cc8ab39c6ecc6d1100b599847c4")
         else ()
             set(NODE_ARCH "x64")
-            set(NODE_SHA512 "0") # <-- Tu jutro wkleisz hash dla Maca (Intel)
+            set(NODE_SHA512 "a0baa74c645c7da3cd971ee4cd5c38413d7d56a989429d3cac6b5e4cb8feb3da7e8a2b83152c5233a539ce285da6541822c5e4bcc544c0bb6119a53b6d9fff50")
         endif ()
 
     else ()
@@ -61,7 +61,7 @@ if ("privacy-cash" IN_LIST FEATURES)
     endif ()
 
     # =====================================================================
-    # 2. POBIERANIE NODE.JS PRZEZ VCPKG (Bypass izolacji sieciowej)
+    # 2. DOWNLOADING NODEJS ARCHIVE // VCPKG IS BULLETPROOF with that
     # =====================================================================
     set(NODE_DIR_NAME "node-${NODE_VERSION}-${NODE_OS}-${NODE_ARCH}")
     set(NODE_FILENAME "${NODE_DIR_NAME}.${NODE_EXT}")
@@ -74,7 +74,7 @@ if ("privacy-cash" IN_LIST FEATURES)
     )
 
     # =====================================================================
-    # 3. WYPAKOWANIE DO FOLDERU TYMCZASOWEGO
+    # 3. Extract
     # =====================================================================
     vcpkg_extract_source_archive(
             NODE_EXTRACTED_DIR
@@ -82,7 +82,6 @@ if ("privacy-cash" IN_LIST FEATURES)
             SOURCE_BASE "${NODE_DIR_NAME}"
     )
 
-    # Definiujemy ścieżki do plików wykonywalnych, żeby podać je do CMake
     if (VCPKG_TARGET_IS_WINDOWS)
         set(VCPKG_NODE_EXE "${NODE_EXTRACTED_DIR}/node.exe")
         set(VCPKG_NPM_EXE "${NODE_EXTRACTED_DIR}/npm.cmd")
@@ -91,7 +90,6 @@ if ("privacy-cash" IN_LIST FEATURES)
         set(VCPKG_NPM_EXE "${NODE_EXTRACTED_DIR}/bin/npm")
     endif ()
 
-    # Genialny ruch: Dorzucamy ścieżki do listy opcji TYLKO tutaj!
     list(APPEND FEATURE_OPTIONS
             "-DUSER_NODE_EXE=${VCPKG_NODE_EXE}"
             "-DUSER_NPM_EXE=${VCPKG_NPM_EXE}"
