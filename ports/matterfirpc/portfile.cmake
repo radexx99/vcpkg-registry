@@ -6,7 +6,7 @@ vcpkg_from_git(
   URL
   ssh://git@github.com/radexx99/matterfirpc.git
   REF
-  0978136c8f6c8e9da0fba5f4cb87a6ce6544991d
+  25bb8866c8263e78b255f0833b653138d171e1f9
   HEAD_REF
   nodeDeploy)
 
@@ -85,22 +85,21 @@ if ("privacy-cash" IN_LIST FEATURES)
             SOURCE_BASE "${NODE_DIR_NAME}"
     )
 
-    # Define paths to executables and the raw npm-cli.js script
     if(VCPKG_TARGET_IS_WINDOWS)
         set(VCPKG_NODE_EXE "${NODE_EXTRACTED_DIR}/node.exe")
-        set(VCPKG_NPM_EXE  "${NODE_EXTRACTED_DIR}/npm.cmd")
         set(VCPKG_NPM_JS_PATH "${NODE_EXTRACTED_DIR}/node_modules/npm/bin/npm-cli.js")
     else()
         set(VCPKG_NODE_EXE "${NODE_EXTRACTED_DIR}/bin/node")
-        set(VCPKG_NPM_EXE  "${NODE_EXTRACTED_DIR}/bin/npm")
-        # On Linux/macOS, node_modules is nested inside the 'lib' folder
         set(VCPKG_NPM_JS_PATH "${NODE_EXTRACTED_DIR}/lib/node_modules/npm/bin/npm-cli.js")
     endif()
 
-    # Append to feature options so CMake knows exactly where everything is
+    # =====================================================================
+    # Inject paths into CMake
+    # We omit USER_NPM_EXE completely because Bulletproof Mode only needs
+    # the raw JS script and the Node executable.
+    # =====================================================================
     list(APPEND FEATURE_OPTIONS
             "-DUSER_NODE_EXE=${VCPKG_NODE_EXE}"
-            "-DUSER_NPM_EXE=${VCPKG_NPM_EXE}"
             "-DUSER_NPM_JS_PATH=${VCPKG_NPM_JS_PATH}"
     )
 else()
