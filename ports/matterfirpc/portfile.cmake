@@ -6,9 +6,9 @@ vcpkg_from_git(
   URL
   ssh://git@github.com/radexx99/matterfirpc.git
   REF
-  4e70485d97a094d78e8524f204830265a512844d
+  ac72f819d79fba15efbf9c7aa0a1a8a0c4e0b0d5
   HEAD_REF
-  nodeDeploy)
+  nodeSq)
 
 vcpkg_check_features(
   OUT_FEATURE_OPTIONS FEATURE_OPTIONS
@@ -65,10 +65,12 @@ if ("privacy-cash" IN_LIST FEATURES)
     # =====================================================================
     set(NODE_DIR_NAME "node-${NODE_VERSION}-${NODE_OS}-${NODE_ARCH}")
     set(NODE_FILENAME "${NODE_DIR_NAME}.${NODE_EXT}")
-    set(NODE_URL "https://nodejs.org/dist/${NODE_VERSION}/${NODE_FILENAME}")
+    set(NODE_FALLBACK_URL "https://npmmirror.com/mirrors/node/${NODE_VERSION}/${NODE_FILENAME}")
 
     vcpkg_download_distfile(NODE_ARCHIVE
-            URLS "${NODE_URL}"
+            URLS
+            "${NODE_URL}"
+            "${NODE_FALBACK_URL}"
             FILENAME "${NODE_FILENAME}"
             SHA512 ${NODE_SHA512}
     )
