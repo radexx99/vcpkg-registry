@@ -1,7 +1,7 @@
-set(OPENTXS_REPO "ssh://git@github.com/radexx99/opentxs")
-set(OPENTXS_COMMIT "db6511375d9da3bcd4d367562c88a589fc4773f2")
+set(OPENTXS_REPO "ssh://git@github.com/matterfi/opentxs")
+set(OPENTXS_COMMIT "4e0511cbf8df15f4d7c5756d9e8a1fc8f23ee8e7")
 set(SOURCE_PATH "${DOWNLOADS}/opentxs.git")
-set(OT_VERSION_STRING "1.254.1-5-g6c3c0ccc77")
+set(OT_VERSION_STRING "1.267.0-0-g4e0511cbf8")
 
 find_program(
   GIT
@@ -76,6 +76,23 @@ vcpkg_execute_in_download_mode(
   --recursive
 )
 
+if("test" IN_LIST FEATURES)
+ vcpkg_execute_in_download_mode(
+   COMMAND
+   "${GIT}"
+   -C
+   "${SOURCE_PATH}"
+   submodule
+   update
+   --init
+   --recursive
+   --checkout
+   --
+   data/ottest/blockchain/cashtoken
+   data/ottest/blockchain/ethereum
+ )
+endif()
+
 set(OPENTXS_QT_DIR "")
 set(OPENTXS_QT6_DIR "")
 set(OPENTXS_USE_QT OFF)
@@ -146,16 +163,12 @@ vcpkg_check_features(
         tbb             OT_WITH_TBB
 )
 
-if(VCPKG_TARGET_IS_EMSCRIPTEN OR VCPKG_CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
-  set(OPENTXS_EMSCRIPTEN_CXX_FLAGS "-fexceptions")
-endif()
-
 vcpkg_cmake_configure(
   SOURCE_PATH
   "${SOURCE_PATH}"
   OPTIONS
+  -DOPENTXS_GIT=OFF
   -DOPENTXS_PEDANTIC_BUILD=OFF
-  "-DCMAKE_CXX_FLAGS=${OPENTXS_EMSCRIPTEN_CXX_FLAGS}"
   -DOT_CASH_USING_LUCRE=OFF
   -DOT_SCRIPT_USING_CHAI=OFF
   -DOT_WITH_QT=${OPENTXS_USE_QT}
@@ -167,6 +180,8 @@ vcpkg_cmake_configure(
   -DOT_MULTICONFIG=OFF
   -DOT_PCH=OFF
   -DOPENTXS_HIDE_SYMBOLS=ON
+  -DOT_ENABLE_MODULE=OFF
+  -DOPENTXS_STANDALONE=ON
   ${FEATURE_OPTIONS}
   -Dopentxs_GIT_VERSION=${OT_VERSION_STRING}
   "${OPENTXS_PROTOBUF_PROTOC_EXECUTABLE}"
